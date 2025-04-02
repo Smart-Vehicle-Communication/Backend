@@ -6,8 +6,19 @@ from database import SessionLocal, engine
 from models import Vehicle, Alert, Base
 from routers import ws
 from mqtt_subscriber import start_mqtt
+from fastapi.middleware.cors import CORSMiddleware
+
+
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:3000"],  # Or specify your frontend URL e.g., "http://localhost:3000"
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 Base.metadata.create_all(bind=engine)
 
